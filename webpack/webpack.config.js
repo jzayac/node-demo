@@ -5,8 +5,6 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var root = path.join(__dirname, '../');
-// console.log(__dirname);
-// console.log(path.join(__dirname, '../app/kokot'));
 
 module.exports = {
   devtool: 'eval-source-map',

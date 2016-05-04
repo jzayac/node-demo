@@ -10,6 +10,6 @@ module.exports = {
   },
 
   required: (value) => {
-    return isEmpty(value)
+    return isEmpty(value);
   }
-}
+};

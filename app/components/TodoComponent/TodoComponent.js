@@ -4,8 +4,6 @@ import * as todoActions from '../../redux/modules/todo';
 import styles from './TodoComponent.css';
 import { Button, Checkbox } from 'react-bootstrap';
 
-
-// <Button bsStyle="primary" bsSize="large" active>Primary button</Button>
 @connect(
   state => ({
     todos: state.todo.todos,
@@ -22,20 +20,9 @@ export default class TodoComponent extends Component {
     deleteTodo: PropTypes.func,
     loader: PropTypes.bool,
   }
-  constructor(props) {
-    super(props);
-    this.state = {
-      focusTodo: null,
-    };
-  }
+
   componentWillMount = () => {
     this.props.getTodo();
-  }
-
-  onUpdateTodo = (todo) => {
-    this.setState({
-      focusTodo: todo,
-    });
   }
 
   handleAddTodo = (event) => {
@@ -57,31 +44,12 @@ export default class TodoComponent extends Component {
     this.props.updateTodo(todo);
   }
 
-  handleChange = (event) => {
-    this.setState({
-      focusTodo: {
-        ...this.state.focusTodo,
-        todo: event.target.value,
-      },
-    });
-  }
-
-  handleChangeSubmit = (event) => {
-    event.preventDefault();
-    this.modifyTodo(this.state.focusTodo);
-    this.setState({
-      focusTodo: null,
-    });
-  }
-
   deleteTodo = (id) => {
     this.props.deleteTodo(id);
   }
 
   render() {
     const { todos, loader } = this.props;
-    const { focusTodo } = this.state;
-    const todoId = focusTodo ? focusTodo.id : -1;
     return (
       <div className="container">
         <div className={styles.todocomponent}>
@@ -100,20 +68,9 @@ export default class TodoComponent extends Component {
                   className={styles.todoCheckbox}
                   onClick={() => this.toggleTodo(todo)}
                 />
-                {(todoId !== todo.id) &&
-                  <span
-                    className={todo.done ? styles.complete : ''}
-                    onDoubleClick={() => this.onUpdateTodo(todo)}
-                  >{todo.todo}</span>
-                }
-                {(todoId === todo.id) &&
-                  <form onSubmit={this.handleChangeSubmit} className={styles.onSubmit}>
-                    <input
-                      className={styles.inputChange} type="text" ref="rit"
-                      value={focusTodo.todo} onChange={this.handleChange}
-                    ></input>
-                  </form>
-                }
+                <span
+                  className={todo.done ? styles.complete : ''}
+                >{todo.todo}</span>
                 <Button
                   className={styles.todoButton}
                   onClick={() => this.deleteTodo(todo.id)}

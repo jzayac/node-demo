@@ -28,7 +28,7 @@ export default function middleware({ getState }) {
       });
 
       new Promise((resolve, reject) => {
-        const url = `http://localhost:3000/api/${params.url}`;
+        const url = `http://localhost:3000/api${params.url}`;
         const req =
           superagent[params.method](url);
         if (params.data) {

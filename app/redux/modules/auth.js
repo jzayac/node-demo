@@ -10,6 +10,8 @@ const AUTH_LOGOUT = 'AUTH_LOGOUT';
 const AUTH_LOGOUT_SUCCESS = 'AUTH_LOGOUT_SUCCESS';
 const AUTH_LOGOUT_FAIL = 'AUTH_LOGOUT_FAIL';
 
+const AUTH_DISMISS_ERROR = 'AUTH_DISMISS_ERROR';
+
 const initState = {
   loader: false,
   user: null,
@@ -58,6 +60,12 @@ export default function reducer(state = initState, action) {
         loggingOut: false,
         logoutError: action.error,
       };
+    case AUTH_DISMISS_ERROR:
+      return {
+        ...state,
+        loginError: null,
+        logoutError: null,
+      };
     default:
       return state;
   }
@@ -96,5 +104,11 @@ export function logout() {
       // name: name
     },
     // promise: (client) => client.get('/logout')
+  };
+}
+
+export function authDismissError() {
+  return {
+    type: AUTH_DISMISS_ERROR,
   };
 }

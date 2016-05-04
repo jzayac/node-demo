@@ -12,18 +12,6 @@ const isDeveloping = process.env.NODE_ENV !== 'production';
 const port = isDeveloping ? 3000 : process.env.PORT;
 const app = express();
 
-// const bodyParser = require('body-parser');
-// const authRouter = require('../api/routes/auth');
-// const todoRouter = require('../api/routes/todo');
-//
-// app.use(bodyParser.urlencoded({
-//     extended: true
-// }));
-//
-// app.use(authRouter);
-// app.use(todoRouter);
-
-
 const proxy = httpProxy.createProxyServer({
   target: 'http://localhost:3030',
   ws: true
@@ -38,15 +26,12 @@ app.use('/api', (req, res) => {
 
 proxy.on('error', (error, req, res) => {
   var json;
-  console.log('PICEEEE');
-  console.log(error);
-  // if (error.code !== 'ECONNRESET') {
-  //   console.error('proxy error', error);
-  // }
-  // if (!res.headersSent) {
-  //   res.writeHead(500, {'content-type': 'application/json'});
-  // }
-  //
+  if (error.code !== 'ECONNRESET') {
+    console.error('proxy error', error);
+  }
+  if (!res.headersSent) {
+    res.writeHead(500, {'content-type': 'application/json'});
+  }
   json = {error: 'proxy_error', reason: error.message};
   res.end(JSON.stringify(json));
 });

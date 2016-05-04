@@ -2,3 +2,4 @@ app/server.js
 node_modules/
 webpack/
 api/*
+utils/
