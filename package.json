@@ -5,14 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "",
-    "start": "node app/server",
+    "start": "concurrent --kill-others \"node app/server\" \"node api/api\"",
     "start-dev-api": "nodemon api/api",
     "start-dev-api-debug": "node-debug api/api",
-    "lint": "eslint -c .eslintrc app",
     "dev": "concurrent --kill-others \"npm run start\" \"npm run start-dev-api\"",
     "build": "rimraf dist && set NODE_ENV=production && webpack --config ./webpack/webpack.production.config.js --progress --profile --colors",
-    "eslint": "eslint .",
-    "jscs": "jscs ."
+    "eslint": "eslint -c .eslintrc app"
   },
   "keywords": [
     "react",
