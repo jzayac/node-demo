@@ -6,9 +6,11 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var StatsPlugin = require('stats-webpack-plugin');
 
+var root = path.join(__dirname, '../')
+
 module.exports = {
   entry: [
-    path.join(__dirname, 'app/main.js')
+    path.join(root, 'app/client.js')
   ],
   output: {
     path: path.join(__dirname, '/dist/'),
@@ -18,7 +20,7 @@ module.exports = {
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
     new HtmlWebpackPlugin({
-      template: 'app/index.tpl.html',
+      template: 'static/index.html',
       inject: 'body',
       filename: 'index.html'
     }),
