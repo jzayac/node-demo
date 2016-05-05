@@ -71,6 +71,10 @@ export default function reducer(state = initState, action) {
   }
 }
 
+export function isLoaded(globalState) {
+  return globalState.auth && globalState.auth.loaded;
+}
+
 export function login(email, password) {
   return {
     types: [AUTH_LOGIN, AUTH_LOGIN_SUCCESS, AUTH_LOGIN_FAIL],

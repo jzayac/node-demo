@@ -5,6 +5,10 @@ const User = require('../models/user');
 
 
 module.exports = (passport) => {
+  // User.findOne({}, function(err, user) {
+  //   console.log(user);
+  // });
+
   passport.serializeUser((user, done) => {
     done(null, user.id);
   });

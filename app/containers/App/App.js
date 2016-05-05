@@ -45,8 +45,11 @@ export default class App extends Component {
                 <LinkContainer to="/todo">
                   <NavItem eventKey={1}>todo</NavItem>
                 </LinkContainer>
+                {user && <LinkContainer to="/user">
+                  <NavItem eventKey={2}>user page</NavItem>
+                </LinkContainer>}
                 <LinkContainer to="/not-found">
-                  <NavItem eventKey={2}>not found</NavItem>
+                  <NavItem eventKey={3}>not found</NavItem>
                 </LinkContainer>
               </Nav>
               {user &&

@@ -33,5 +33,19 @@ router.get('/logout', (req, res) => {
   });
 });
 
+router.get('/user', isAuthenticated, (req, res) => {
+  res.status(200).json({
+    data: 'send from server',
+  });
+});
+
+
+function isAuthenticated(req, res, next) {
+    if (req.session.user) {
+      return next();
+    }
+    res.json({ error: 'Unauthorized'});
+}
+
 
 module.exports = router;

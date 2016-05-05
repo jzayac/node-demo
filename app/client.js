@@ -8,7 +8,7 @@ import store from './redux/store';
 
 const routes = (
   <Router history={browserHistory}>
-    {getRoutes}
+    {getRoutes(store)}
   </Router>
 );
 

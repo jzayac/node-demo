@@ -21,7 +21,7 @@ if (dbConf.mongoose) {
 passportConf(passport);
 
 app.use(morgan('dev'));
-app.use(cookieParser()); // read cookies (needed for auth)
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({
   extended: true,
 }));
@@ -30,7 +30,7 @@ app.use(session({
   secret: 'simple todo app',
   resave: false,
   saveUninitialized: false,
-  // cookie: { maxAge: 60000 }
+  cookie: { maxAge: 60000 }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
