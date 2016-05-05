@@ -6,14 +6,14 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var StatsPlugin = require('stats-webpack-plugin');
 
-var root = path.join(__dirname, '../')
+var root = path.join(__dirname, '../');
 
 module.exports = {
   entry: [
     path.join(root, 'app/client.js')
   ],
   output: {
-    path: path.join(__dirname, '/dist/'),
+    path: path.join(root, '/static/dist/'),
     filename: '[name]-[hash].min.js',
     publicPath: '/'
   },

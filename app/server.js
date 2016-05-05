@@ -9,7 +9,7 @@ const config = require('../webpack/webpack.config.js');
 const httpProxy = require('http-proxy');
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
-const port = isDeveloping ? 3000 : process.env.PORT;
+const port = 3000;
 const app = express();
 
 const proxy = httpProxy.createProxyServer({
@@ -54,13 +54,13 @@ if (isDeveloping) {
   app.use(middleware);
   app.use(webpackHotMiddleware(compiler));
   app.get('*', function response(req, res) {
-    res.write(middleware.fileSystem.readFileSync(path.join(__dirname, '../dist/index.html')));
+    res.write(middleware.fileSystem.readFileSync(path.join(__dirname, '../static/index.html')));
     res.end();
   });
 } else {
-  app.use(express.static(__dirname + '../dist'));
+  app.use(express.static(path.join(__dirname, '../static/dist')));
   app.get('*', function response(req, res) {
-    res.sendFile(path.join(__dirname, '../dist/index.html'));
+    res.sendFile(path.join(__dirname, '../static/dist/index.html'));
   });
 }
 
