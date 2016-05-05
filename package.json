@@ -6,9 +6,10 @@
   "scripts": {
     "test": "",
     "start": "concurrent --kill-others \"node app/server\" \"node api/api\"",
+    "start-dev-server": "node app/server",
     "start-dev-api": "nodemon api/api",
     "start-dev-api-debug": "node-debug api/api",
-    "dev": "concurrent --kill-others \"npm run start\" \"npm run start-dev-api\"",
+    "dev": "concurrent --kill-others \"npm run start-dev-server\" \"npm run start-dev-api\"",
     "build": "rimraf dist && set NODE_ENV=production && webpack --config ./webpack/webpack.production.config.js --progress --profile --colors",
     "eslint": "eslint -c .eslintrc app"
   },
