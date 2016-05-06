@@ -6,6 +6,7 @@ const webpack = require('webpack');
 const webpackMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const config = require('../webpack/webpack.config.js');
+const favicon = require('serve-favicon');
 const httpProxy = require('http-proxy');
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
@@ -23,7 +24,7 @@ app.use('/api', (req, res) => {
   console.log(req.body);
   proxy.web(req, res);
 });
-
+app.use(favicon(path.join(__dirname, '../static/favicon.ico')));
 proxy.on('error', (error, req, res) => {
   var json;
   if (error.code !== 'ECONNRESET') {
@@ -51,11 +52,16 @@ if (isDeveloping) {
     }
   });
 
+  console.log('rit');
   app.use(middleware);
   app.use(webpackHotMiddleware(compiler));
-  app.get('*', function response(req, res) {
+  app.get('/', function response(req, res) {
     res.write(middleware.fileSystem.readFileSync(path.join(__dirname, '../static/index.html')));
     res.end();
+  });
+  // TODO: render page from server
+  app.get('*', function (req, res) {
+    res.status(301).redirect('/');
   });
 } else {
   app.use(express.static(path.join(__dirname, '../static/dist')));
