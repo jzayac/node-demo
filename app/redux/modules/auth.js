@@ -10,6 +10,12 @@ const AUTH_LOGOUT = 'AUTH_LOGOUT';
 const AUTH_LOGOUT_SUCCESS = 'AUTH_LOGOUT_SUCCESS';
 const AUTH_LOGOUT_FAIL = 'AUTH_LOGOUT_FAIL';
 
+const AUTH_SIGNUP = 'AUTH_SIGNUP';
+const AUTH_SIGNUP_SUCCESS = 'AUTH_SIGNUP_SUCCESS';
+const AUTH_SIGNUP_FAIL = 'AUTH_SIGNUP_FAIL';
+
+const AUTH_SIGNUP_VALIDATION_ERROR = ' AUTH_SIGNUP_VALIDATION_ERROR';
+
 const AUTH_DISMISS_ERROR = 'AUTH_DISMISS_ERROR';
 
 const initState = {
@@ -42,6 +48,25 @@ export default function reducer(state = initState, action) {
         user: null,
         loginError: action.error,
       };
+    // sign in
+    case AUTH_SIGNUP:
+      return {
+        ...state,
+        signingUp: true,
+      };
+    case AUTH_SIGNUP_SUCCESS:
+      return {
+        ...state,
+        user: action.data,
+        signUpError: null,
+      };
+    case AUTH_SIGNUP_FAIL:
+      return {
+        ...state,
+        user: null,
+        signUpError: action.error,
+      };
+    // user authorization
     case AUTH_LOGOUT:
       return {
         ...state,
@@ -65,6 +90,7 @@ export default function reducer(state = initState, action) {
         ...state,
         loginError: null,
         logoutError: null,
+        signUpError: null,
       };
     default:
       return state;
@@ -110,6 +136,26 @@ export function logout() {
     // promise: (client) => client.get('/logout')
   };
 }
+
+export function signUp(email, password) {
+  return {
+    types: [AUTH_SIGNUP, AUTH_SIGNUP_SUCCESS, AUTH_SIGNUP_FAIL],
+    params: {
+      method: 'post',
+      url: '/signup',
+      data: {
+        email,
+        password,
+      },
+    },
+  };
+}
+
+// export function signUpValidationError() {
+//   return {
+//     type:
+//   }
+// }
 
 export function authDismissError() {
   return {

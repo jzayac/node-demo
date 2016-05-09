@@ -6,6 +6,7 @@ import {
   Main,
   Todo,
   User,
+  SignUp,
   NotFound } from './containers';
 
 
@@ -31,7 +32,7 @@ export default (store) => {
     <Route path="/" component={App}>
       <IndexRoute component={Main} />
       <Route path="todo" component={Todo} />
-      <Route path="todo" component={Todo} />
+      <Route path="signup" component={SignUp} />
       <Route onEnter={requireLogin}>
         <Route path="user" component={User} />
       </Route>
