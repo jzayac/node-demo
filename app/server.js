@@ -52,7 +52,6 @@ if (isDeveloping) {
     }
   });
 
-  console.log('rit');
   app.use(middleware);
   app.use(webpackHotMiddleware(compiler));
   app.get('*', function response(req, res) {
@@ -60,9 +59,9 @@ if (isDeveloping) {
     res.end();
   });
   // TODO: render page from server
-  // app.get('*', function (req, res) {
-  //   res.status(301).redirect('/');
-  // });
+  app.get('*', function (req, res) {
+    res.status(301).redirect('/');
+  });
 } else {
   app.use(express.static(path.join(__dirname, '../static/dist')));
   app.get('*', function response(req, res) {

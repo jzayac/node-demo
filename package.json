@@ -43,6 +43,7 @@
     "react-router-bootstrap": "^0.23.0",
     "react-router-redux": "^4.0.4",
     "redux": "^3.5.2",
+    "redux-form": "^5.2.3",
     "scroll-behavior": "^0.4.0",
     "serve-favicon": "^2.3.0",
     "superagent": "^1.8.3"
