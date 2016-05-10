@@ -54,7 +54,7 @@ if (isDeveloping) {
 
   app.use(middleware);
   app.use(webpackHotMiddleware(compiler));
-  app.get('*', function response(req, res) {
+  app.get('/', function response(req, res) {
     res.write(middleware.fileSystem.readFileSync(path.join(__dirname, '../static/index.html')));
     res.end();
   });

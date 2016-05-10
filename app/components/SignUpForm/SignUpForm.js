@@ -1,9 +1,26 @@
 import React, { Component, PropTypes } from 'react';
 import { Button, Alert } from 'react-bootstrap';
-import styles from './SignUpForm.css';
 import { connect } from 'react-redux';
+import { reduxForm } from 'redux-form';
 import * as authActions from '../../redux/modules/auth';
+import styles from './SignUpForm.css';
 import * as validation from '../../../utils/validation';
+
+const validate = (data = {}) => {
+  const errors = {};
+  if (!data.email) {
+    errors.email = 'Please enter email';
+  } else if (!validation.isEmail(data.email)) {
+    errors.email = 'Please enter valid email';
+  }
+  if (!data.password) errors.password = 'Please enter password';
+  if (!data.passwordConf) {
+    errors.passwordConf = 'Please enter an passwordConf.';
+  } else if (data.password === data.passwordConf) {
+    errors.passwordConf = 'Password must match';
+  }
+  return errors;
+};
 
 @connect(
   state => ({
@@ -12,75 +29,64 @@ import * as validation from '../../../utils/validation';
     signingUp: state.auth.signingUp,
   }),
   authActions)
-export default class SingUpForm extends Component {
-  static propTpyes = {
-    loggingIn: PropTypes.string,
+@reduxForm({
+  form: 'SignUp',
+  fields: ['email', 'password', 'passwordConf'],
+  validate,
+})
+export default class SignUpForm extends Component {
+  static propTypes = {
+    loggingIn: PropTypes.bool,
     authDismissError: PropTypes.func,
     signUpError: PropTypes.string,
     signUp: PropTypes.func,
     signingUp: PropTypes.string,
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = { validationError: null };
-  }
-
-  validationError = (err) => {
-    this.setState({
-      validationError: (err || null),
-    });
+    fields: PropTypes.object,
   }
 
   handleSingUp = () => {
-    const user = this.refs.email;
-    const pass = this.refs.userpass;
-    const passConf = this.refs.userpassconf;
-    // let err = '';
-    if (pass.value !== passConf.value) {
-      // err = `${err} </br> password not match`;
-      this.validationError('password not match');
-    } else if (!validation.isEmail(user.value)) {
-      // console.log('not valid email');
-      // console.log(user.value);
-      this.validationError('not valid email');
-    } else {
-      this.validationError();
-      this.props.signUp(user.value, pass.value);
-      user.value = '';
-      pass.value = '';
-      passConf.value = '';
-      // TODO: use some form
-    }
+    // TODO: submit sign up
+    console.log('handle submit');
   }
 
   render() {
-    const { signUpError, signingUp, authDismissError } = this.props;
-    const { validationError } = this.state;
-    const error = validationError || signUpError;
+    const { signUpError, signingUp, authDismissError,
+      fields: { email, password, passwordConf },
+     } = this.props;
     return (
       <div>
-        {error &&
+        <h2>form test</h2>
+        {signUpError &&
           <Alert bsStyle="danger" onDismiss={authDismissError}>
-            {error}
+            {signUpError}
           </Alert>
         }
-        <form >
+        <form onSubmit={this.handleSubmit}>
           <input
             type="text" ref="email" placeholder="Enter email"
             className={`${styles.widthFull} form-control`}
+            {...email}
             disabled={signingUp}
           />
+          {email.error && email.touched && <div className="text-danger">{email.error}</div>}
           <input
             type="password" ref="userpass" placeholder="Enter password"
             className={`${styles.widthFull} form-control`}
+            {...password}
             disabled={signingUp}
           />
+          {password.error && password.touched &&
+            <div className="text-danger">{password.error}</div>
+          }
           <input
             type="password" ref="userpassconf" placeholder="Confirm password"
             className={`${styles.widthFull} form-control`}
+            {...passwordConf}
             disabled={signingUp}
           />
+          {passwordConf.error && passwordConf.touched &&
+            <div className="text-danger">{passwordConf.error}</div>
+          }
           <Button
             className="btn btn-lg btn-primary btn-block"
             onClick={this.handleSingUp}
