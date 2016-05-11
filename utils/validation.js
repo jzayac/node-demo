@@ -4,7 +4,7 @@ function isEmpty (value) {
 
 module.exports = {
   isEmail: (value) => {
-    if (isEmpty(value) && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
+    if (!isEmpty(value) && /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
       return true;
     }
   },

@@ -16,7 +16,7 @@ const validate = (data = {}) => {
   if (!data.password) errors.password = 'Please enter password';
   if (!data.passwordConf) {
     errors.passwordConf = 'Please enter an passwordConf.';
-  } else if (data.password === data.passwordConf) {
+  } else if (data.password !== data.passwordConf) {
     errors.passwordConf = 'Password must match';
   }
   return errors;
@@ -42,20 +42,23 @@ export default class SignUpForm extends Component {
     signUp: PropTypes.func,
     signingUp: PropTypes.string,
     fields: PropTypes.object,
+    submitting: PropTypes.bool.isRequired,
   }
 
-  handleSingUp = () => {
+  handleSubmit = (event) => {
+    event.preventDefault();
     // TODO: submit sign up
     console.log('handle submit');
   }
 
   render() {
-    const { signUpError, signingUp, authDismissError,
+    const { signUpError, signingUp, authDismissError, loggingIn,
       fields: { email, password, passwordConf },
-     } = this.props;
+    } = this.props;
+    let disableSubmit = email.error || password.error || passwordConf.error;
+    disableSubmit = disableSubmit || signingUp || loggingIn;
     return (
       <div>
-        <h2>form test</h2>
         {signUpError &&
           <Alert bsStyle="danger" onDismiss={authDismissError}>
             {signUpError}
@@ -87,12 +90,12 @@ export default class SignUpForm extends Component {
           {passwordConf.error && passwordConf.touched &&
             <div className="text-danger">{passwordConf.error}</div>
           }
-          <Button
+          <button
             className="btn btn-lg btn-primary btn-block"
-            onClick={this.handleSingUp}
-            disabled={signingUp}
+            disabled={disableSubmit}
+            type="submit"
           ><i className="fa fa-sign-in" />{' '}Log In
-          </Button>
+          </button>
         </form>
       </div>
     );
