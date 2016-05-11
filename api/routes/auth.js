@@ -33,6 +33,17 @@ router.get('/logout', (req, res) => {
   });
 });
 
+router.post('/signup',
+      passport.authenticate('local-signup'),
+      (req, res) => {
+        console.log('signupt func');
+  setTimeout(() => {
+    res.json({
+      data: req.session.user,
+    });
+  }, 2000);
+});
+
 router.get('/user', isAuthenticated, (req, res) => {
   res.status(200).json({
     data: 'send from server',
