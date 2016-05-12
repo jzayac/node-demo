@@ -32,7 +32,7 @@ module.exports = (passport) => {
       }
 
       if (user) {
-        return done({ signupMessage: 'That email is already taken.' }, false);
+        return done(null, false, { status: 401, error: 'That email is already taken.' });
       } else {
         const newUser = new User();
 
@@ -44,7 +44,6 @@ module.exports = (passport) => {
           if (error) {
             throw error;
           } else {
-            // res.session.user = newUser;
             return done(null, newUser);
           }
         });
@@ -64,18 +63,14 @@ module.exports = (passport) => {
       }
 
       if (!user) {
-        return done({ status: 401, loginMessage: 'No user found.' });
+        return done(null, false, { status: 401, error: 'No user found.' });
       }
 
       if (!user.validPassword(password)) {
-        return done(null, false, { loginMessage: 'Oops! Wrong password.' });
+        return done(null, false, { status: 401, error: 'Oops! Wrong password.' });
       }
 
-      req.session.user = {
-        id: user._id,
-        email: user.email,
-      };
-      return done(null, user);
+      return done(null, user);;
     });
   }));
 };

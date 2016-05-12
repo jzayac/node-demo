@@ -37,9 +37,17 @@ export default function middleware({ getState }) {
         }
         req.end((err, res) => {
           if (err || !res.body) {
-            return reject({
-              data: err,
-            });
+            if (res.body && res.body.error) {
+              return reject({
+                data: {
+                  message: res.body.error,
+                },
+              });
+            } else {
+              return reject({
+                data: err,
+              });
+            }
           } else {
             return resolve({
               data: res.body.data,

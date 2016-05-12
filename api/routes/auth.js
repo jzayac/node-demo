@@ -12,18 +12,33 @@ router.get('/login', (req, res) => {
 
 router.get('/loadauth', (req, res) => {
   res.json({
-    data: req.session.user || null,
+    data: req.user || null,
   });
 });
 
-router.post('/login',
-      passport.authenticate('local-login'),
-      (req, res) => {
-  setTimeout(() => {
-    res.json({
-      data: req.session.user,
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local-login', (err, user, info) => {
+    if (err) {
+      return next(err); // will generate a 500 error
+    }
+    if (info) {
+      return res.status(info.status).json({message: info.error});
+    }
+    if (! user) {
+      return res.status(401).json({ success: false, message: 'authentication failed' });
+    }
+    req.login(user, loginErr => {
+      if (loginErr) {
+        return next(loginErr);
+      }
+      res.json({
+        success: true,
+        data: {
+          email: user.email,
+        }
+      });
     });
-  }, 2000);
+  })(req, res, next);
 });
 
 router.get('/logout', (req, res) => {
@@ -33,15 +48,29 @@ router.get('/logout', (req, res) => {
   });
 });
 
-router.post('/signup',
-      passport.authenticate('local-signup'),
-      (req, res) => {
-        console.log('signupt func');
-  setTimeout(() => {
-    res.json({
-      data: req.session.user,
+router.post('/signup', (req, res, next) => {
+  passport.authenticate('local-signup', (err, user, info) => {
+    if (err) {
+      return next(err); // will generate a 500 error
+    }
+    if (info) {
+      return res.status(info.status).json({message: info.error});
+    }
+    if (!user) {
+      return res.status(401).json({ success: false, message: 'registration failed' });
+    }
+    req.login(user, loginErr => {
+      if (loginErr) {
+        return next(loginErr);
+      }
+      res.json({
+        success: true,
+        data: {
+          email: user.email,
+        }
+      });
     });
-  }, 2000);
+  })(req, res, next);
 });
 
 router.get('/user', isAuthenticated, (req, res) => {
@@ -52,7 +81,7 @@ router.get('/user', isAuthenticated, (req, res) => {
 
 
 function isAuthenticated(req, res, next) {
-    if (req.session.user) {
+    if (req.isAuthenticated()) {
       return next();
     }
     res.json({ error: 'Unauthorized'});
