@@ -14,8 +14,6 @@ const AUTH_SIGNUP = 'AUTH_SIGNUP';
 const AUTH_SIGNUP_SUCCESS = 'AUTH_SIGNUP_SUCCESS';
 const AUTH_SIGNUP_FAIL = 'AUTH_SIGNUP_FAIL';
 
-const AUTH_SIGNUP_VALIDATION_ERROR = ' AUTH_SIGNUP_VALIDATION_ERROR';
-
 const AUTH_DISMISS_ERROR = 'AUTH_DISMISS_ERROR';
 
 const initState = {
@@ -58,12 +56,14 @@ export default function reducer(state = initState, action) {
       return {
         ...state,
         user: action.data,
+        signingUp: false,
         signUpError: null,
       };
     case AUTH_SIGNUP_FAIL:
       return {
         ...state,
         user: null,
+        signingUp: false,
         signUpError: action.error,
       };
     // user authorization

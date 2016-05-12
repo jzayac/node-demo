@@ -22,10 +22,10 @@ router.post('/login', (req, res, next) => {
       return next(err); // will generate a 500 error
     }
     if (info) {
-      return res.status(info.status).json({message: info.error});
+      return res.status(info.status).json({error: info.error});
     }
     if (! user) {
-      return res.status(401).json({ success: false, message: 'authentication failed' });
+      return res.status(401).json({ success: false, error: 'authentication failed' });
     }
     req.login(user, loginErr => {
       if (loginErr) {
@@ -54,10 +54,10 @@ router.post('/signup', (req, res, next) => {
       return next(err); // will generate a 500 error
     }
     if (info) {
-      return res.status(info.status).json({message: info.error});
+      return res.status(info.status).json({error: info.error});
     }
     if (!user) {
-      return res.status(401).json({ success: false, message: 'registration failed' });
+      return res.status(401).json({ success: false, error: 'registration failed' });
     }
     req.login(user, loginErr => {
       if (loginErr) {

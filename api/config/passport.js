@@ -26,6 +26,9 @@ module.exports = (passport) => {
     passReqToCallback: true,
   },
   (req, email, password, done) => {
+    if (!validation.isEmail(email)) {
+      return done(null, false, { status: 400, error: 'invalid email' });
+    }
     User.findOne({ email:  email }, (err, user) => {
       if (err) {
         return done(err);
@@ -57,6 +60,9 @@ module.exports = (passport) => {
     passReqToCallback: true, // allows us to pass back the entire request to the callback
   },
   (req, email, password, done) => { // callback with email and password from our form
+    if (!validation.isEmail(email)) {
+      return done(null, false, { status: 400, error: 'invalid email' });
+    }
     User.findOne({ email:  email }, (err, user) => {
       if (err) {
         return done(err);

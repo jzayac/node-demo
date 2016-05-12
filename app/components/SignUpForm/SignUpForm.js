@@ -40,15 +40,15 @@ export default class SignUpForm extends Component {
     authDismissError: PropTypes.func,
     signUpError: PropTypes.string,
     signUp: PropTypes.func,
-    signingUp: PropTypes.string,
+    signingUp: PropTypes.bool,
     fields: PropTypes.object,
     submitting: PropTypes.bool.isRequired,
   }
 
   handleSubmit = (event) => {
     event.preventDefault();
-    // TODO: submit sign up
-    console.log('handle submit');
+    const { fields: { email, password } } = this.props;
+    this.props.signUp(email.value, password.value);
   }
 
   render() {
@@ -90,12 +90,12 @@ export default class SignUpForm extends Component {
           {passwordConf.error && passwordConf.touched &&
             <div className="text-danger">{passwordConf.error}</div>
           }
-          <button
+          <Button
             className="btn btn-lg btn-primary btn-block"
-            disabled={disableSubmit}
+            disabled={!!disableSubmit}
             type="submit"
           ><i className="fa fa-sign-in" />{' '}Log In
-          </button>
+          </Button>
         </form>
       </div>
     );
