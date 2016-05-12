@@ -10,7 +10,7 @@ export default function Main() {
     <div className={styles.main}>
       <Helmet title="home" />
       <Jumbotron>
-        <h1>React todo</h1>
+        <h1>Demo</h1>
         <p>This is a simple hero unit, a simple jumbotron-style
           component for calling extra attention to featured
           content or information.
