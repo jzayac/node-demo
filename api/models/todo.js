@@ -14,7 +14,7 @@ function Todos() {
   function findInArray(id, callback) {
     let idx;
     const todo = todos.find((todo, index) => {
-      if (todo.id === id) {
+      if (todo.id == id) {
         idx = index;
         return todo;
       }
@@ -23,21 +23,13 @@ function Todos() {
   }
 
   that.find = (filter, callback) => {
-    if (Object.keys(filter).length === 0) {
-      return callback(undefined, todos);
-    } else {
-      return callback({ error: 'not implemented' });
-    }
+    return callback(undefined, todos);
   }
 
 
   that.findById = (id, callback) => {
     findInArray(id, (todo) => {
-      if (todo) {
-        return callback(undefined, todo);
-      } else {
-        return callback({ status: 'not found' });
-      }
+      return callback(undefined, todo);
     });
   };
 
@@ -58,7 +50,7 @@ function Todos() {
         todos[idx].done = updateTodo.done ? updateTodo.done : todos[idx].done;
         callback(undefined, todos[idx]);
       } else {
-        callback({ status: 'not found' });
+        callback(undefined, undefined);
       }
     });
   };
@@ -67,10 +59,8 @@ function Todos() {
     findInArray((filter._id *1), (todo, idx) => {
       if (idx !== undefined) {
         todos.splice(idx, 1);
-        callback(undefined, idx);
-      } else {
-        callback({ status: 'not found' });
       }
+      callback(undefined, idx);
     });
   };
 

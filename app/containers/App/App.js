@@ -35,7 +35,7 @@ export default class App extends Component {
             <Navbar.Header>
               <Navbar.Brand>
                 <IndexLink to="/" >
-                  <span>todo app</span>
+                  <span>Demo</span>
                 </IndexLink>
               </Navbar.Brand>
               <Navbar.Toggle />

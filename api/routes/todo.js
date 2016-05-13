@@ -21,7 +21,7 @@ router.get('/todo', (req, res) => {
 
 router.get('/todo/:id', (req, res) => {
   Todo.findById(req.params.id, (err, todo) => {
-    if (err) {
+    if (err || !todo) {
       res.status(404).json({
         message: 'not found',
       });
@@ -35,7 +35,7 @@ router.get('/todo/:id', (req, res) => {
 
 router.post('/todo', (req, res) => {
   Todo.push(req.body.todo, (err, todo) => {
-    if (err) {
+    if (err || !todo) {
       res.status(500).json({
         message: 'o_O something wrong',
       });
@@ -53,7 +53,7 @@ router.post('/todo/:id', (req, res) => {
     done: req.body.done,
   };
   Todo.findOneAndUpdate({ _id: req.params.id * 1 }, todo, { new: 'true' }, (err, data) => {
-    if (err) {
+    if (err || !data) {
       res.status(404).json({
         message: 'not found',
       });
@@ -65,7 +65,7 @@ router.post('/todo/:id', (req, res) => {
 
 router.delete('/todo/:id', (req, res) => {
   Todo.remove({ _id: req.params.id }, (err, idx) => {
-    if (err) {
+    if (err || !idx) {
       res.status(404).json({
         message: 'not found',
       });

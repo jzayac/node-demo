@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(session({
-  secret: 'simple todo app',
+  secret: 'simple demo app',
   resave: false,
   saveUninitialized: false,
   cookie: { maxAge: 60000 }

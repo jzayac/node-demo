@@ -4,10 +4,7 @@ function User() {
   let that = {};
   const users = [
     { id: 123, email: 'root@doman.com', password: '' },
-    { id: 223, user: 'todo2', password: '' },
-    { id: 323, user: 'todo3', password: '' },
-    { id: 423, user: 'todo4', password: '' },
-    { id: 523, user: 'todo5', password: '' },
+    { id: 223, user: 'todo2', password: '' }
   ];
   let key = users.length + 1;
 
@@ -35,11 +32,7 @@ function User() {
     // if (Object.keys(filter).length !== 0 ) {
     let email = filter.email;
     findInArray(email, ( user ) => {
-      if (user) {
-        callback(undefined, user);
-      } else {
-        callback({ status: 'not found' });
-      }
+      callback(undefined, user);
     });
   }
 
