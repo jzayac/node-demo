@@ -73,7 +73,6 @@
     "file-loader": "^0.8.5",
     "html-webpack-plugin": "^2.16.0",
     "mocha": "^2.4.5",
-    "mockgoose": "^6.0.3",
     "morgan": "^1.7.0",
     "postcss-loader": "^0.8.2",
     "redux-devtools": "^3.2.0",
