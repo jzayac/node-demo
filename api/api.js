@@ -20,7 +20,7 @@ if (dbConf.mongoose) {
 }
 passportConf(passport);
 
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({
   extended: true,
@@ -51,3 +51,4 @@ app.use((req, res) => {
 app.listen(3030, () => {
   console.log('Api listening on port 3030!');
 });
+module.exports = app;

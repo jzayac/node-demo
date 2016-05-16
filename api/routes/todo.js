@@ -65,12 +65,11 @@ router.post('/todo/:id', (req, res) => {
 
 router.delete('/todo/:id', (req, res) => {
   Todo.remove({ _id: req.params.id }, (err, idx) => {
-    if (err || !idx) {
+    if (err || idx === undefined) {
       res.status(404).json({
         message: 'not found',
       });
     } else {
-      console.log(idx);
       res.status(200).json({
         data: idx,
       });

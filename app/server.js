@@ -20,8 +20,6 @@ const proxy = httpProxy.createProxyServer({
 
 
 app.use('/api', (req, res) => {
-  console.log('proxy------------------');
-  console.log(req.body);
   proxy.web(req, res);
 });
 app.use(favicon(path.join(__dirname, '../static/favicon.ico')));
@@ -33,7 +31,7 @@ proxy.on('error', (error, req, res) => {
   if (!res.headersSent) {
     res.writeHead(500, {'content-type': 'application/json'});
   }
-  json = {error: 'proxy_error', reason: error.message};
+  json = {error: 'server communication error', reason: error.message};
   res.end(JSON.stringify(json));
 });
 
